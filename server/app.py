@@ -21,4 +21,6 @@ def clue():
         json_data = request.get_json()
         clue = json_data['clue']
         
-app.run(host='0.0.0.0', port='5000')
+if __name__ == '__main__':
+    app.debug = True
+    app.run(use_reloader=True, host='0.0.0.0', port='5000')
