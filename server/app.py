@@ -1,5 +1,6 @@
 # Import everything that we need from Flask
-from flask import Flask, request, session, flash
+from flask import Flask, request, session, flash, jsonify
+from flask_cors import CORS
 # This may not be used, but it's for url parsing
 from markupsafe import escape
 # Store all of our data, potentially logins
@@ -10,9 +11,10 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
 
+CORS(app, resources={r'/*': {'origins': '*'}})
+
 @app.route('/')
 def home():
-    flash("Hello!")
     return "If you're seeing this, you're in good shape"
 
 @app.route('/clue', methods=['POST'])
