@@ -39,11 +39,21 @@ export default {
                         this.$router.push("/clue/"+urlCrypt.cryptObj(this.clue));
                     }
                     else{
-                        this.$buefy.dialog.alert("Sorry, that's not a clue!");
+                        this.$buefy.dialog.alert({
+                        title: "Bummer!",
+                        message: "Sorry, that's not a clue...",
+                        confirmText: "Try again"
+                    });
                     }
                 })
                 .catch((error => {
                     console.error(error);
+                    this.$buefy.dialog.alert({
+                        type: "is-danger",
+                        title: "Whoops",
+                        message: "Something is up with the server",
+                        confirmText: "Go Back"
+                    });
                 }));
             }
         },
@@ -65,10 +75,13 @@ export default {
             })
             .catch((error => {
                 console.error(error);
+                this.$buefy.dialog.alert({
+                        type: "is-danger",
+                        title: "Whoops",
+                        message: "Something is up with the server",
+                        confirmText: "Go Back"
+                });
             }));
-        },
-        showMsg(){
-        alert("Button Pressed!");
         },
     },
 };

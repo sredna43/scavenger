@@ -13,7 +13,17 @@ const routes = [
     path: '/clue/:clue_id',
     name: 'Clue',
     component: () => import('../views/Clue.vue')
-  }
+  },
+  {
+    path: '/input/:input_id',
+    name: 'Input',
+    component: () => import('../views/InputPage.vue')
+  },
+  {
+    path: '/input',
+    name: 'Input',
+    component: () => import('../views/InputPage.vue')
+  },
 ]
 
 const router = new VueRouter({
