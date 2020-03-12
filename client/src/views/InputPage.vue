@@ -1,5 +1,5 @@
 <template>
-    <div class="columns content">
+    <div class="columns content is-mobile">
         <div class="column is-8 is-offset-2">
             <br>
             <h1 class="title">Scavenger Hunt</h1>
@@ -8,7 +8,6 @@
             <p>{{this.last_clue}}</p>
             <p>Enter the answer to the last clue to get your next clue:</p>
             <InputBar></InputBar>
-            <b-button class="on-bottom" expanded>I'm new here</b-button>
         </div>
     </div>
 </template>

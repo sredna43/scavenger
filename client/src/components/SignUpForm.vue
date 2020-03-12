@@ -1,10 +1,11 @@
 <template>
-    <section>
-        <h4 id="sign-inup-form">Sign up:</h4>
+    <section class="column is-8 is-offset-2">
+        <h4>Sign up:</h4>
         <b-field label="Name">
             <b-input v-model="name"></b-input>
         </b-field>
         <b-field 
+            id="sign-inup-form"
             label="Username" 
             :type=checkUser.success
             :message=checkUser.message>
@@ -18,7 +19,7 @@
         </b-field>
         <b-field
             label="Re-Type Password"
-            :type=checkPass.matchsuccsess
+            :type=checkPass.matchsuccess
             :message=checkPass.matchmessage>
             <b-input v-model="passmatch" type="password" password-reveal @input="checkPassword" @keyup.enter.native="submitForm" maxlength="30"></b-input>
         </b-field>
@@ -32,22 +33,23 @@
 </template>
 
 <script>
-var passwordHash = require('password-hash');
+//var passwordHash = require('password-hash');
 export default {
     name: "SignUpForm",
     data() {
         return {
             checkUser: {
-                success: "is-success",
+                success: "",
                 message: "",
                 taken: false,
             },
             checkPass: {
-                success: "is-danger",
-                message: ['Password is too short','Password must have at least 8 characters', "(Also don't use an important one...)"],
+                success: "",
+                message: ['Password must have at least 8 characters', "(Also don't use an important one...)"],
                 valid: false,
                 match: false,
-                matchmessage: "Passwords must match"
+                matchmessage: "Passwords must match",
+                matchsuccess: "",
             },
             username: '',
             name: '',
@@ -65,7 +67,7 @@ export default {
             }
             else {
                 this.checkUser.success = "is-danger";
-                this.checkUser.message = "Username taken";
+                this.checkUser.message = "Username taken or is too short - must be 4 characters";
                 this.checkUser.taken = true;
             }
         },
