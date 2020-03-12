@@ -9,8 +9,8 @@ def db_setup(c):
     sql_create_users = """CREATE TABLE IF NOT EXISTS users (
         id integer PRIMARY KEY,
         name text NOT NULL,
-        username test NOT NULL,
-        passhash 
+        username text NOT NULL,
+        passhash text
     )
     """
     try:
