@@ -8,7 +8,7 @@
         expanded>
     </b-input>
     </b-field>
-    <b-button class="submit button is-light" @click.native="submitButton" expanded>Go!</b-button>
+    <b-button class="submit button is-lightgreen" @click.native="submitButton" expanded>Go!</b-button>
     </form>
 </template>
 

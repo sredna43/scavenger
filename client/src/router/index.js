@@ -24,6 +24,11 @@ const routes = [
     name: 'Input',
     component: () => import('../views/InputPage.vue')
   },
+  {
+    path: '/newuser/:user',
+    name: 'NewUser',
+    component: () => import('../views/NewUser.vue')
+  },
 ]
 
 const router = new VueRouter({

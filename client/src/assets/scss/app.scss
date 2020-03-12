@@ -11,6 +11,12 @@ $twitter: #55acee;
 $twitter-invert: findColorInvert($twitter);
 $github: #333;
 $github-invert: findColorInvert($github);
+$good-blue: #05386b;
+$good-blue-invert: findColorInvert($good-blue);
+$dark-green: #379683;
+$dark-green-invert: findColorInvert($dark-green);
+$lg: #8ee4af;
+$lg-i: findColorInvert($lg);
 
 @import "~bulma/sass/utilities/derived-variables";
 
@@ -18,7 +24,10 @@ $github-invert: findColorInvert($github);
 $addColors: (
   "twitter":($twitter, $twitter-invert),
   "linkedin": ($linkedin, $linkedin-invert),
-  "github": ($github, $github-invert)
+  "github": ($github, $github-invert),
+  "goodblue": ($good-blue, $good-blue-invert),
+  "darkgreen": ($dark-green, $dark-green-invert),
+  "lightgreen": ($lg, $lg-i)
 );
 $colors: map-merge($colors, $addColors);
 
