@@ -1,10 +1,11 @@
 <template>
-    <section>
-        <h4 id="sign-inup-form">Sign up:</h4>
+    <section class="column is-8 is-offset-2">
+        <h4>Sign up:</h4>
         <b-field label="Name">
             <b-input v-model="name"></b-input>
         </b-field>
         <b-field 
+            id="sign-inup-form"
             label="Username" 
             :type=checkUser.success
             :message=checkUser.message>
@@ -18,7 +19,7 @@
         </b-field>
         <b-field
             label="Re-Type Password"
-            :type=checkPass.matchsuccsess
+            :type=checkPass.matchsuccess
             :message=checkPass.matchmessage>
             <b-input v-model="passmatch" type="password" password-reveal @input="checkPassword" @keyup.enter.native="submitForm" maxlength="30"></b-input>
         </b-field>
@@ -32,26 +33,36 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 var axios = require('axios');
 var passwordHash = require('password-hash');
 axios.defaults.headers.common['key'] = '317f7911-4b82-4d4f-adb6-9bd6fef3d84f';
 var url = 'http://localhost:5000'
 import store from '../store'
+=======
+//var passwordHash = require('password-hash');
+>>>>>>> 7fc7bab39eb4ea2eb255248ed1ec22f7a2a149ec
 export default {
     name: "SignUpForm",
     data() {
         return {
             checkUser: {
+<<<<<<< HEAD
                 success: "is-danger",
                 message: "Username must be at least 4 characters",
+=======
+                success: "",
+                message: "",
+>>>>>>> 7fc7bab39eb4ea2eb255248ed1ec22f7a2a149ec
                 taken: false,
             },
             checkPass: {
-                success: "is-danger",
-                message: ['Password is too short','Password must have at least 8 characters', "(Also don't use an important one...)"],
+                success: "",
+                message: ['Password must have at least 8 characters', "(Also don't use an important one...)"],
                 valid: false,
                 match: false,
-                matchmessage: "Passwords must match"
+                matchmessage: "Passwords must match",
+                matchsuccess: "",
             },
             username: '',
             name: '',
@@ -67,6 +78,7 @@ export default {
                 this.checkUser.success = "is-success";
                 this.checkUser.message = "";
                 this.checkUser.taken = false;
+<<<<<<< HEAD
                 }
                 else{
                     if(this.username.length <= 3 && !TakenNames.includes(this.username)){
@@ -85,6 +97,14 @@ export default {
                         this.checkUser.taken = true;
                     }
                 }
+=======
+            }
+            else {
+                this.checkUser.success = "is-danger";
+                this.checkUser.message = "Username taken or is too short - must be 4 characters";
+                this.checkUser.taken = true;
+            }
+>>>>>>> 7fc7bab39eb4ea2eb255248ed1ec22f7a2a149ec
         },
         checkPassword(){
             if(this.password.length < 8){

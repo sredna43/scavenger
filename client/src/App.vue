@@ -14,6 +14,6 @@
   background-color: #f5f5f5;
   min-height: 100%;
   min-width: 100%;
-  zoom: 1.25;
+  zoom: 1.2;
 }
 </style>

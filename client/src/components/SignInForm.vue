@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="column is-8 is-offset-2">
         <h4 id="sign-inup-form">Sign in:</h4>
         <form class="login" @submit.prevent="submitForm">
             <b-field 
