@@ -13,7 +13,7 @@
             {{hint2}}
         </b-notification>
         <br>
-        <router-link to='/'>Back</router-link>
+        <router-link to='/input'>Back to passphrase input</router-link>
     </div>
 </template>
 

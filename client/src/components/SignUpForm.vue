@@ -8,7 +8,7 @@
             label="Username" 
             :type=checkUser.success
             :message=checkUser.message>
-            <b-input v-model="username" @input=checkUsername maxlength="30"></b-input>
+            <b-input v-model="username" @input=checkUsername maxlength="20"></b-input>
         </b-field>
         <b-field 
             label="Password"
@@ -32,14 +32,18 @@
 </template>
 
 <script>
+var axios = require('axios');
 var passwordHash = require('password-hash');
+axios.defaults.headers.common['key'] = '317f7911-4b82-4d4f-adb6-9bd6fef3d84f';
+var url = 'http://localhost:5000'
+import store from '../store'
 export default {
     name: "SignUpForm",
     data() {
         return {
             checkUser: {
-                success: "is-success",
-                message: "",
+                success: "is-danger",
+                message: "Username must be at least 4 characters",
                 taken: false,
             },
             checkPass: {
@@ -53,21 +57,34 @@ export default {
             name: '',
             password: '',
             passmatch: '',
+            TakenNames: [],
         }
     },
     methods: {
         checkUsername(){
-            var TakenNames = ["Test", "Apples"]
-            if(!TakenNames.includes(this.username) && this.username.length > 3){
+            var TakenNames = this.TakenNames;
+                if(!TakenNames.includes(this.username) && this.username.length > 3){
                 this.checkUser.success = "is-success";
                 this.checkUser.message = "";
                 this.checkUser.taken = false;
-            }
-            else {
-                this.checkUser.success = "is-danger";
-                this.checkUser.message = "Username taken";
-                this.checkUser.taken = true;
-            }
+                }
+                else{
+                    if(this.username.length <= 3 && !TakenNames.includes(this.username)){
+                        this.checkUser.success = "is-danger";
+                        this.checkUser.message = "Username must be at least 4 characters";
+                        this.checkUser.taken = true; //I think I hackily made this the check for posting an add-user
+                    }
+                    if(this.username.length > 3 && TakenNames.includes(this.username)){
+                        this.checkUser.success = "is-danger";
+                        this.checkUser.message = "Username taken";
+                        this.checkUser.taken = true;
+                    }
+                    if(this.username.length <= 3 && TakenNames.includes(this.username)){
+                        this.checkUser.success = "is-danger";
+                        this.checkUser.message = ["Username taken", "Username must be at least 4 characters"];
+                        this.checkUser.taken = true;
+                    }
+                }
         },
         checkPassword(){
             if(this.password.length < 8){
@@ -97,12 +114,33 @@ export default {
             this.$parent.signUp = false;
         },
         submitForm(){
+            var adduser_url = url + '/add_user'
             this.checkUsername();
             this.checkPassword();
             if(!this.checkUser.taken && this.checkPass.valid && this.checkPass.match){
-                this.$buefy.toast.open("Signed up successfully")
-                // Do create user stuff on backend
-                this.$router.push({name: 'NewUser', params: {user: this.name}})
+                axios.post(adduser_url, {
+                    name: this.name,
+                    username: this.username,
+                    passhash: passwordHash.generate(this.password),
+                    last_clue_id: 1
+                })
+                .then((res) => {
+                    if(200 <= res.status < 300){
+                        this.$buefy.toast.open("Signed up successfully");
+                        this.$router.push({name: 'NewUser', params: {user: this.name}});
+                        store.dispatch("authenticate");
+                    }
+                    else{
+                        this.$buefy.dialog.alert({
+                            type: "is-danger",
+                            title: "Whoops",
+                            message: "Something is up with the server",
+                            confirmText: "Go Back"
+                        });
+                    }
+                    
+                });
+                
             }
             else {
                 var errmsg = [];
@@ -124,5 +162,14 @@ export default {
             }
         }
     },
+    created(){
+        var user_url = url + '/get_users'
+        console.log(user_url);
+        axios.get(user_url)
+        .then((res) => {
+            this.TakenNames = res.data;
+            console.log(this.TakenNames);
+        });
+    }
 }
 </script>

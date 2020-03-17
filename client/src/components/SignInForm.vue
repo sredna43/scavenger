@@ -21,6 +21,10 @@
 </template>
 
 <script>
+var axios = require('axios');
+var passwordHash = require('password-hash');
+var login_url = "http://localhost:5000/login";
+
 export default {
     name: "SignInForm",
     data(){
@@ -34,7 +38,21 @@ export default {
             this.$parent.signIn = false;
         },
         submitForm(){
-            alert("Submit")
+            let username = this.username;
+            let password = this.password;
+            axios.post(login_url, {
+                username: username
+            })
+            .then((res) => {
+                if(200 <= res.status < 300){
+                    var ph = res.data[0];
+                    if(passwordHash.verify(password, ph[0])){
+                        console.log("Success");
+                        console.log(this.$store);
+                        this.$store.dispatch('auth');
+                    }
+                }
+            });
         }
     }
 }
