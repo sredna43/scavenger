@@ -1,0 +1,11 @@
+---
+application:
+  name: "scavenger"
+  project: "Test App"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-scavenger"
+  routes:
+  - application_name: "scavenger"
+    paths:
+    - "/*"
